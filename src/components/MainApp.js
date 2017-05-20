@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { PropTypes as T } from 'react'
+import AppBar from 'material-ui/AppBar';
 
 class MainApp extends React.Component {
 

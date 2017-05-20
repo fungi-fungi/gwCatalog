@@ -1,12 +1,10 @@
 'use strict';
 
 import React, { PropTypes as T } from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
 
 class AppComponent extends React.Component {
-
-  static contextTypes = {
-    router: T.object
-  }
 
   render() {
     let children = null;
@@ -17,7 +15,17 @@ class AppComponent extends React.Component {
     }
 
     return (
-      <div className="index"> {children} </div>
+      <div>
+        <MuiThemeProvider>
+          <div>
+            <AppBar
+              title="Gateway"
+              iconElementLeft={<div/>}
+            />
+            {children}
+          </div>
+        </MuiThemeProvider>
+      </div>
     );
   }
 }
