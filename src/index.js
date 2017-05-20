@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard'
 ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Main}>
+        <IndexRedirect to="/home" />
         <Route path="/home" component={MainApp}>
           <Route path="/home/dashboard" component={Dashboard} />
         </Route>

@@ -1,8 +1,12 @@
 'use strict';
 
-import React, { PropTypes as T } from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
+import React from 'react'
+import PropTypes from 'prop-types';
+import { MuiThemeProvider } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper'
+
+import AppMainBar from './AppMainBar'
 
 class AppComponent extends React.Component {
 
@@ -18,12 +22,22 @@ class AppComponent extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <AppBar
-              title="Gateway"
-              iconElementLeft={<div/>}
-            />
-            {children}
+            <AppMainBar />
+            <Grid container direction="column" align="center">
+              <Grid item xs={12}>
+                <Grid container>
+                  <Grid item xs={6}>
+                    asdasd sdfsdfsdf sdfsdfsd dsfsdfsd dsfsdf
+                  </Grid>
+                  <Grid item xs={6}>
+                    {children}
+                  </Grid>
+                </Grid>
+
+              </Grid>
+            </Grid>
           </div>
+
         </MuiThemeProvider>
       </div>
     );
