@@ -69,6 +69,7 @@
     "image-webpack-loader": "^3.0.0",
     "jwt-decode": "^2.0.1",
     "material-ui": "^1.0.0-alpha.14",
+    "material-ui-icons": "^1.0.0-alpha.3",
     "normalize.css": "^4.0.0",
     "react": "^15.4.1",
     "react-autosuggest": "^9.0.1",
