@@ -1,6 +1,14 @@
-const Server = require('./server.js')
+const express = require('express')
+const mongoose = require('mongoose')
+const api = require('./api.js')
 const port = (process.env.PORT || 8080)
-const app = Server.app()
+
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost:27017/gwcatalog');
+
+
+const app = express()
+app.use('/', api.routes());
 
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack')
