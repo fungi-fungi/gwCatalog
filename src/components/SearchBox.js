@@ -7,77 +7,16 @@ import SearchIcon from 'material-ui-icons/Search';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import InboxIcon from 'material-ui-icons/Inbox';
 
+import ProductStore from '../stores/ProductStore';
+import ProductActions from '../actions/ProductActions';
+
 import styles from '../styles/SearchBox.css'
 
 /**
  * SearchBox component
  */
 
- const languages = [
-   {
-     name: 'cc 12',
-     year: 1972
-   },
-   {
-     name: 'Ccc 43',
-     year: 1972
-   },
-   {
-     name: 'C',
-     year: 1972
-   },
-   {
-     name: 'Ccc',
-     year: 1972
-   },
-   {
-     name: 'Cccc 67',
-     year: 1972
-   },
-   {
-     name: 'C 234234',
-     year: 1972
-   },
-   {
-     name: 'Ccccc 324',
-     year: 1972
-   },
-   {
-     name: 'Ccc',
-     year: 1972
-   },
-   {
-     name: 'C',
-     year: 1972
-   },
-   {
-     name: 'Cc',
-     year: 1972
-   },
-   {
-     name: 'Cc',
-     year: 1972
-   },
-   {
-     name: 'Elm',
-     year: 2012
-   }
- ];
-
- // Teach Autosuggest how to calculate suggestions for any given input value.
- const getSuggestions = value => {
-   const inputValue = value.trim().toLowerCase();
-   const inputLength = inputValue.length;
-
-   return inputLength === 0 ? [] : languages.filter(lang =>
-     lang.name.toLowerCase().slice(0, inputLength) === inputValue
-   );
- };
-
- // When suggestion is clicked, Autosuggest needs to populate the input element
- // based on the clicked suggestion. Teach Autosuggest how to calculate the
- // input value for every given suggestion.
- const getSuggestionValue = suggestion => suggestion.name;
+ const getSuggestionValue = suggestion => suggestion.title;
 
  const renderSuggestionsContainer= ({ containerProps , children, query }) => {
   return (
@@ -93,7 +32,7 @@ import styles from '../styles/SearchBox.css'
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
-      <ListItemText primary={suggestion.name} />
+      <ListItemText primary={suggestion.title} />
     </ListItem>
  );
 
@@ -101,27 +40,36 @@ class SearchBox extends React.Component {
   constructor() {
     super();
 
-    // Autosuggest is a controlled component.
-    // This means that you need to provide an input value
-    // and an onChange handler that updates this value (see below).
-    // Suggestions also need to be provided to the Autosuggest,
-    // and they are initially empty because the Autosuggest is closed.
     this.state = {
       value: '',
-      suggestions: []
+      suggestions: [],
     };
+
+    this.onChange = this.onChange.bind(this);
   }
 
-  onChange = (event, { newValue }) => {
+  componentWillMount() {
+    ProductStore.addChangeListener(this.onChange);
+  }
+
+  componentWillUnmount() {
+    ProductStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    this.setState({
+      suggestions: ProductStore.getProducts()
+    });
+  }
+
+  onInputChange = (event, { newValue }) => {
     this.setState({
       value: newValue
     });
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
+    ProductActions.recieveProducts(value);
   };
 
   onSuggestionsClearRequested = () => {
@@ -136,7 +84,7 @@ class SearchBox extends React.Component {
     const inputProps = {
       placeholder: 'Type product id',
       value,
-      onChange: this.onChange
+      onChange: this.onInputChange
     };
 
     return (

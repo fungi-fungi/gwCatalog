@@ -2,7 +2,12 @@
 
 const NetworkConstants = {
 
-  /**
+
+  RECIEVE_PRODUCTS:         'RECIEVE_PRODUCTS',
+  RECIEVE_PRODUCTS_SUCCESS: 'RECIEVE_PRODUCTS_SUCCESS',
+  RECIEVE_PRODUCTS_ERROR:   'RECIEVE_PRODUCTS_ERROR',
+
+  /*
   * Login
   */
   LOG_IN:  'LOG_IN',
