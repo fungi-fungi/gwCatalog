@@ -1,10 +1,18 @@
 'use strict';
 
 import React from 'react'
+
+import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
+import ServiceParts from './ServiceParts'
+
 import styles from '../styles/ProductDetails.css'
+
+function createMarkup(html) {
+  return { __html: html };
+}
 
 class ProductDetails extends React.Component {
 
@@ -13,13 +21,41 @@ class ProductDetails extends React.Component {
     const { product } = this.props;
 
     return (
+
       <Paper elevation={4} className={styles.padding}>
-        <Typography type="headline" component="h3">
-          { product.name }
-        </Typography>
-        <Typography type="body1" component="p">
-          Paper can be used to build surface or other elements for your application.
-        </Typography>
+        <Grid container>
+
+          <Grid item xs={12} lg={12}>
+              <Grid container gutter={24} direction="column">
+
+                <Grid item>
+                  <Typography type="headline" component="h3">
+                    { product.name }
+                  </Typography>
+                </Grid>
+
+                <Grid item>
+                  <Grid container>
+                    <Grid xs={4}>Image herer</Grid>
+                    <Grid item md={8} xs={8}>
+                      { product.description }
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                <Grid item>
+                  <div dangerouslySetInnerHTML={ createMarkup(product.properties) } />
+                </Grid>
+
+                <Grid item>
+                  <ServiceParts parts={ product.serviceParts || [] } />
+                </Grid>
+
+              </Grid>
+
+          </Grid>
+
+        </Grid>
       </Paper>
     )
   }
