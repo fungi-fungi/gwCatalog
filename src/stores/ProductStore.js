@@ -9,6 +9,7 @@ const CHANGE_EVENT = 'change';
 
 let _products = [];
 let _product = [];
+let _isProductSelected = false;
 
 function setProducts(products) {
   _products = products;
@@ -16,6 +17,10 @@ function setProducts(products) {
 
 function setProduct(product) {
   _product = product;
+}
+
+function setProductStatus(status) {
+  _isProductSelected = status;
 }
 
 function clearProducts() {
@@ -52,6 +57,10 @@ class ProductStoreClass extends EventEmitter {
     return _product;
   }
 
+  getIsProductSelected() {
+    return _isProductSelected;
+  }
+
 }
 
 const ProductStore = new ProductStoreClass();
@@ -67,11 +76,13 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
 
     case NetworkConstants.SELECT_PRODUCT:
       setProduct(action.product);
+      setProductStatus(true);
       ProductStore.emitChange();
       break;
 
     case NetworkConstants.CLEAR_PRODUCTS:
       clearProducts();
+      setProductStatus(false);
       ProductStore.emitChange();
       break;
 

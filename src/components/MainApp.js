@@ -16,7 +16,9 @@ class MainApp extends React.Component {
 
     this.state = {
       value: '',
-      suggestions: []
+      selectedProduct: { name: ''},
+      suggestions: [],
+      isProductSelected: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -33,7 +35,9 @@ class MainApp extends React.Component {
 
   onChange() {
     this.setState({
-      suggestions: ProductStore.getProducts()
+      suggestions: ProductStore.getProducts(),
+      selectedProduct: ProductStore.getSelectedProduct(),
+      isProductSelected: ProductStore.getIsProductSelected()
     });
   }
 
