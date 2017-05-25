@@ -13,7 +13,7 @@ import styles from '../styles/SearchBox.css'
 /**
  * SearchBox component
  */
- const getSuggestionValue = suggestion => suggestion.title;
+ const getSuggestionValue = suggestion => suggestion.id;
 
  const renderSuggestionsContainer= ({ containerProps , children, query }) => {
   return (
