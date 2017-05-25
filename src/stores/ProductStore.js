@@ -8,9 +8,18 @@ import { EventEmitter } from 'events';
 const CHANGE_EVENT = 'change';
 
 let _products = [];
+let _product = [];
 
 function setProducts(products) {
   _products = products;
+}
+
+function setProduct(product) {
+  _product = product;
+}
+
+function clearProducts() {
+  _products = [];
 }
 
 class ProductStoreClass extends EventEmitter {
@@ -36,7 +45,11 @@ class ProductStoreClass extends EventEmitter {
   }
 
   getSuggestions() {
-    return _products;//_products.map( (product) => { return product.id + '  ' + product.name })
+    return _products;
+  }
+
+  getSelectedProduct() {
+    return _product;
   }
 
 }
@@ -50,7 +63,17 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
     case NetworkConstants.RECIEVE_PRODUCTS_SUCCESS:
       setProducts(action.products);
       ProductStore.emitChange();
-      break
+      break;
+
+    case NetworkConstants.SELECT_PRODUCT:
+      setProduct(action.product);
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.CLEAR_PRODUCTS:
+      clearProducts();
+      ProductStore.emitChange();
+      break;
 
     default:
   }

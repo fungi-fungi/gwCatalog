@@ -6,6 +6,19 @@ import ClientAPI from '../utils/ClientAPI';
 
 export default {
 
+  selectProduct: (product) => {
+    AppDispatcher.dispatch({
+      actionType: NetworkConstants.SELECT_PRODUCT,
+      product: product
+    })
+  },
+
+  clearProducts: () => {
+    AppDispatcher.dispatch({
+      actionType: NetworkConstants.CLEAR_PRODUCTS
+    })
+  },
+
   recieveProducts: (query) => {
 
     AppDispatcher.dispatch({
