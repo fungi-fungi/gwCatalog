@@ -6,6 +6,7 @@ import Autosuggest from 'react-autosuggest';
 import SearchIcon from 'material-ui-icons/Search';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import InboxIcon from 'material-ui-icons/Inbox';
+import Paper from 'material-ui/Paper';
 
 import styles from '../styles/SearchBox.css'
 
@@ -49,7 +50,7 @@ class SearchBox extends React.Component {
     };
 
     return (
-      <div className={styles.mainContainer}>
+      <Paper className={styles.mainContainer}>
         <SearchIcon />
         <Autosuggest
           theme={styles}
@@ -62,7 +63,7 @@ class SearchBox extends React.Component {
           inputProps={inputProps}
           onSuggestionSelected={onSuggestionSelected}
         />
-      </div>
+      </Paper>
     );
   }
 }

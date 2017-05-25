@@ -8,8 +8,8 @@ import { EventEmitter } from 'events';
 const CHANGE_EVENT = 'change';
 
 let _products = [];
-let _product = [];
 let _isProductSelected = false;
+let _product = { name: '' };
 
 function setProducts(products) {
   _products = products;
@@ -76,13 +76,11 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
 
     case NetworkConstants.SELECT_PRODUCT:
       setProduct(action.product);
-      setProductStatus(true);
       ProductStore.emitChange();
       break;
 
     case NetworkConstants.CLEAR_PRODUCTS:
       clearProducts();
-      setProductStatus(false);
       ProductStore.emitChange();
       break;
 

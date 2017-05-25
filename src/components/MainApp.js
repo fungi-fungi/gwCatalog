@@ -16,7 +16,7 @@ class MainApp extends React.Component {
 
     this.state = {
       value: '',
-      selectedProduct: { name: ''},
+      selectedProduct: { name: '' },
       suggestions: [],
       isProductSelected: false
     };
@@ -41,12 +41,6 @@ class MainApp extends React.Component {
     });
   }
 
-  onChange() {
-    this.setState({
-      suggestions: ProductStore.getProducts()
-    });
-  }
-
   onInputChange = (event, { newValue }) => {
     this.setState({
       value: newValue
@@ -67,7 +61,7 @@ class MainApp extends React.Component {
 
   render() {
 
-    const { value, suggestions } = this.state;
+    const { value, suggestions, selectedProduct } = this.state;
 
     return (
       <AppFrame
@@ -79,7 +73,9 @@ class MainApp extends React.Component {
           onSuggestionSelected={ this.onSuggestionSelected }
           onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
         /> }
-        appDetails={ <ProductDetails /> }
+        appDetails={ <ProductDetails
+          product={ selectedProduct }
+         /> }
        />
 
     );
