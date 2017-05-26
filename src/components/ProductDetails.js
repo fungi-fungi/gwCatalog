@@ -30,13 +30,15 @@ class ProductDetails extends React.Component {
 
                 <Grid item>
                   <Typography type="headline" component="h3">
-                    { product.name }
+                    { product.title }
                   </Typography>
                 </Grid>
 
                 <Grid item>
                   <Grid container>
-                    <Grid xs={4}>Image herer</Grid>
+                    <Grid item xs={4}>
+                      <img src={product.localPath} />
+                    </Grid>
                     <Grid item md={8} xs={8}>
                       { product.description }
                     </Grid>
@@ -44,7 +46,7 @@ class ProductDetails extends React.Component {
                 </Grid>
 
                 <Grid item>
-                  <div dangerouslySetInnerHTML={ createMarkup(product.properties) } />
+                  <table dangerouslySetInnerHTML={ createMarkup(product.properties) } />
                 </Grid>
 
                 <Grid item>

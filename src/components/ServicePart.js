@@ -22,7 +22,7 @@ class ServicePart extends React.Component {
 
       <Card className={styles.card}>
         <div className={styles.productImage}>
-          <img src={servicePart.imageFullPath} />
+          <img src={ "https://s3.us-east-2.amazonaws.com/gw-catalog/images/" + servicePart.url.replace('-2.', '.')} />
         </div>
         <div className={styles.details}>
           <CardContent className={styles.content}>

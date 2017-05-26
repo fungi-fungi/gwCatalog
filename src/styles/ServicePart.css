@@ -23,6 +23,7 @@
     flex: 1;
 }
 
-.productImage {
+.productImage img {
   height: 100px;
+  padding: 8px;
 }

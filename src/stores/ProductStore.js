@@ -44,7 +44,9 @@ class ProductStoreClass extends EventEmitter {
   getProducts() {
     return _products.map( (product) => {
        return Object.assign(product, {
-         title: decode(product.id + '  ' + product.name)
+         title: decode(product.id + '  ' + product.name),
+         description: decode(product.description),
+         localPath: "https://s3.us-east-2.amazonaws.com/gw-catalog/images/" + product.fullPath.split('/').slice(-1)[0].replace('-2.', '.')
        })
     });
   }
