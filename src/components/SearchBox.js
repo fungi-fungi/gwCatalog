@@ -46,7 +46,7 @@ class SearchBox extends React.Component {
            } = this.props;
 
     const inputProps = {
-      placeholder: 'Type product id',
+      placeholder: 'Type product ID or Name',
       value,
       onChange: onInputChange
     };

@@ -27,7 +27,7 @@ export default {
     })
 
     ClientAPI
-      .sendGetRequest('/products', {id: query} )
+      .sendGetRequest('/products', {query: query} )
       .then(products => {
         AppDispatcher.dispatch({
           actionType: NetworkConstants.RECIEVE_PRODUCTS_SUCCESS,

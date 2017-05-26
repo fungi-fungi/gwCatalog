@@ -17,7 +17,10 @@ module.exports = {
 
     router.get('/api/products', (req, res) => {
       Product
-        .find({ id: { '$regex': req.query.id, '$options': 'i' }})
+        .find({ $or:[
+          { id: { '$regex': req.query.query, '$options': 'i' }},
+          { name: { '$regex': req.query.query, '$options': 'i'}}
+        ]})
         .limit(10)
         .exec( (err, product) => {
           res.send(product);
