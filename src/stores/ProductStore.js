@@ -10,6 +10,7 @@ const CHANGE_EVENT = 'change';
 let _products = [];
 let _isProductSelected = false;
 let _product = { name: '' };
+let _isSuggestionsLoading = false;
 
 function setProducts(products) {
   _products = products;
@@ -20,6 +21,10 @@ function setProduct(product) {
   _product.serviceParts.map( (servicePart) => {
       return Object.assign(servicePart, {isExpanded: false});
   })
+}
+
+function setSuggestionsLoadingStatus(status) {
+  _isSuggestionsLoading = status;
 }
 
 function setProductStatus(status) {
@@ -77,6 +82,10 @@ class ProductStoreClass extends EventEmitter {
     return _isProductSelected;
   }
 
+  getIsSuggestionsLoading() {
+    return _isSuggestionsLoading;
+  }
+
 }
 
 const ProductStore = new ProductStoreClass();
@@ -85,8 +94,19 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
 
   switch(action.actionType) {
 
+    case NetworkConstants.RECIEVE_PRODUCTS:
+      setSuggestionsLoadingStatus(action.isLoading);
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.RECIEVE_PRODUCTS_ERROR:
+      setSuggestionsLoadingStatus(action.isLoading);
+      ProductStore.emitChange();
+      break;
+
     case NetworkConstants.RECIEVE_PRODUCTS_SUCCESS:
       setProducts(action.products);
+      setSuggestionsLoadingStatus(action.isLoading);
       ProductStore.emitChange();
       break;
 

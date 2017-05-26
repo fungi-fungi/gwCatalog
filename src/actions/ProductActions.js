@@ -23,7 +23,7 @@ export default {
 
     AppDispatcher.dispatch({
       actionType: NetworkConstants.RECIEVE_PRODUCTS,
-      request_status: true
+      isLoading: true
     })
 
     ClientAPI
@@ -31,14 +31,15 @@ export default {
       .then(products => {
         AppDispatcher.dispatch({
           actionType: NetworkConstants.RECIEVE_PRODUCTS_SUCCESS,
-          products: products
+          products: products,
+          isLoading: false
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
           actionType: NetworkConstants.RECIEVE_PRODUCTS_ERROR,
           message: message,
-          request_status: false
+          isLoading: false
         });
       });
   }

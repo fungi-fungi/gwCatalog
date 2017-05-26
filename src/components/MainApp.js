@@ -18,6 +18,7 @@ class MainApp extends React.Component {
       value: '',
       selectedProduct: { name: '' },
       suggestions: [],
+      isSuggestionsLoading: false,
       isProductSelected: false
     };
 
@@ -37,7 +38,8 @@ class MainApp extends React.Component {
     this.setState({
       suggestions: ProductStore.getProducts(),
       selectedProduct: ProductStore.getSelectedProduct(),
-      isProductSelected: ProductStore.getIsProductSelected()
+      isProductSelected: ProductStore.getIsProductSelected(),
+      isSuggestionsLoading: ProductStore.getIsSuggestionsLoading()
     });
   }
 
@@ -61,11 +63,12 @@ class MainApp extends React.Component {
 
   render() {
 
-    const { value, suggestions, selectedProduct } = this.state;
+    const { value, suggestions, selectedProduct, isSuggestionsLoading } = this.state;
 
     return (
       <AppFrame
         searchBar={ <SearchBox
+          isLoading={ isSuggestionsLoading }
           value={ value }
           suggestions= { suggestions }
           onInputChange={ this.onInputChange }

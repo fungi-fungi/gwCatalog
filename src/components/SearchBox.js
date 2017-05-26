@@ -7,6 +7,7 @@ import SearchIcon from 'material-ui-icons/Search';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import InboxIcon from 'material-ui-icons/Inbox';
 import Paper from 'material-ui/Paper';
+import { CircularProgress } from 'material-ui/Progress';
 
 import styles from '../styles/SearchBox.css'
 
@@ -40,7 +41,8 @@ class SearchBox extends React.Component {
             onSuggestionsClearRequested,
             onSuggestionsFetchRequested,
             onSuggestionSelected,
-            onInputChange
+            onInputChange,
+            isLoading
            } = this.props;
 
     const inputProps = {
@@ -63,6 +65,11 @@ class SearchBox extends React.Component {
           inputProps={inputProps}
           onSuggestionSelected={onSuggestionSelected}
         />
+        { isLoading ? (
+          <CircularProgress size={20} />
+        ) : (
+          <div className={styles.loadingPlaceholder}></div>
+        )}
       </Paper>
     );
   }
