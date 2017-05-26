@@ -17,6 +17,9 @@ function setProducts(products) {
 
 function setProduct(product) {
   _product = product;
+  _product.serviceParts.map( (servicePart) => {
+      return Object.assign(servicePart, {isExpanded: false});
+  })
 }
 
 function setProductStatus(status) {
@@ -25,6 +28,17 @@ function setProductStatus(status) {
 
 function clearProducts() {
   _products = [];
+}
+
+function toggleExpand(servicePartProductId) {
+  let id = _product.serviceParts.findIndex( (servicePart) => {
+      return servicePart.partNumber == servicePartProductId;
+  })
+
+  if (id > - 1) {
+    _product.serviceParts[id].isExpanded = !_product.serviceParts[id].isExpanded;
+  }
+
 }
 
 class ProductStoreClass extends EventEmitter {
@@ -83,6 +97,11 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
 
     case NetworkConstants.CLEAR_PRODUCTS:
       clearProducts();
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.TOGGLE_EXPAND:
+      toggleExpand(action.servicePartProductId);
       ProductStore.emitChange();
       break;
 

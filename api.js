@@ -24,6 +24,14 @@ module.exports = {
         })
     })
 
+    router.get('/api/products/:id', (req, res) => {
+      Product
+        .findOne({ id: req.params.id })
+        .exec( (err, product) => {
+          res.send(product);
+        })
+    })
+
   	return router;
   }
 }
