@@ -4,7 +4,6 @@ import React from 'react'
 import { MuiThemeProvider } from 'material-ui/styles';
 
 import AppMainBar from './AppMainBar';
-import AppFrame from './AppFrame';
 
 import styles from '../styles/Main.css'
 
@@ -24,7 +23,7 @@ class AppComponent extends React.Component {
         <MuiThemeProvider>
           <div className={styles.frame}>
             <AppMainBar />
-            <AppFrame> {children} </AppFrame>
+            <div className={styles.app}> { children } </div>
           </div>
         </MuiThemeProvider>
       </div>

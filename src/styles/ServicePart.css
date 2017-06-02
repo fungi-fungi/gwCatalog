@@ -1,0 +1,33 @@
+.card {
+  display: flex;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto
+}
+
+.icons {
+  display: flex;
+    align-items: center;
+    padding-left: 8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+    flex-flow: left;
+    justify-content: flex-end;
+    margin-right: 16px;
+    flex: 1;
+}
+
+.productImage img {
+  height: 100px;
+  padding: 8px;
+}
+
+.secontLevel {
+  padding-left: 32px;
+}
