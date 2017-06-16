@@ -17,7 +17,7 @@ class ProductDetailsShort extends React.Component {
 
   render() {
 
-    const { product } = this.props;
+    const { product, level, parent } = this.props;
 
     return (
 
@@ -39,7 +39,7 @@ class ProductDetailsShort extends React.Component {
                 </Grid>
 
                 <Grid item>
-                  <ServiceParts parts={ product.serviceParts || [] } />
+                  <ServiceParts parent={ parent } parts={ product.serviceParts || [] } level={ level } />
                 </Grid>
 
               </Grid>

@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import Infinite from 'react-infinite';
 
 class Dashboard extends React.Component {
 
@@ -22,14 +23,11 @@ class Dashboard extends React.Component {
           <div className="slds-col slds-large-size--6-of-12">
           </div>
           <div className="slds-col slds-large-size--4-of-12">
-
           </div>
         </div>
       </div>
     );
   }
 }
-
-Dashboard.displayName = 'Dashboard';
 
 export default Dashboard;

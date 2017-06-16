@@ -6,10 +6,12 @@ import ClientAPI from '../utils/ClientAPI';
 
 export default {
 
-  toggleExpand: (id) => {
+  toggleExpand: (id, level, parent) => {
     AppDispatcher.dispatch({
       actionType: NetworkConstants.TOGGLE_EXPAND,
-      servicePartProductId: id
+      servicePartProductId: id,
+      level: level,
+      parent: parent
     })
   },
 

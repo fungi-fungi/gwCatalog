@@ -18,7 +18,7 @@ class ServicePart extends React.Component {
 
   render() {
 
-    const { servicePart, product, onExpand } = this.props;
+    const { servicePart, product, level, parent, onExpand } = this.props;
 
     return (
 
@@ -41,7 +41,7 @@ class ServicePart extends React.Component {
                   </CardContent>
                 </div>
                 <div className={styles.icons}>
-                  <IconButton onClick={ () => onExpand(servicePart.partNumber) }>
+                  <IconButton onClick={ () => onExpand(servicePart.partNumber, level, parent) }>
                     <InboxIcon />
                   </IconButton>
                 </div>

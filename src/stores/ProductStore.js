@@ -7,10 +7,23 @@ import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
 
+let _searchPhrase = '';
 let _products = [];
+let _productsCount = 0;
 let _isProductSelected = false;
 let _product = { name: '' };
 let _isSuggestionsLoading = false;
+let _isLoadingMore = false;
+let _isAutoSuggest = true;
+let _secondLevelProduct = { name: '' };
+
+function setSearchPhrase(searchPhrase) {
+  _searchPhrase = searchPhrase;
+}
+
+function insertMoreProducts(products) {
+  _products = [].concat(_products, products);
+}
 
 function setProducts(products) {
   _products = products;
@@ -23,26 +36,59 @@ function setProduct(product) {
   })
 }
 
+function setSecondLevelProduct(product) {
+  _secondLevelProduct = product;
+  console.log("set second");
+  console.log(product);
+  console.log(_secondLevelProduct);
+}
+
+function setProductsCount(count) {
+  _productsCount = count;
+}
+
 function setSuggestionsLoadingStatus(status) {
   _isSuggestionsLoading = status;
 }
 
-function setProductStatus(status) {
-  _isProductSelected = status;
+function setIsLoadingMoreStatus(status) {
+  _isLoadingMore = status;
 }
 
 function clearProducts() {
   _products = [];
 }
 
-function toggleExpand(servicePartProductId) {
-  let id = _product.serviceParts.findIndex( (servicePart) => {
-      return servicePart.partNumber == servicePartProductId;
+function toggleExpand(servicePartProductId, level, parent) {
+
+  // console.log("------------");
+  // console.log(servicePartProductId);
+  // console.log(level);
+  // console.log(parent);
+  // console.log(_secondLevelProduct);
+
+  let parentIndex = _products.findIndex( (product) => {
+      return product.id == parent;
   })
 
-  if (id > - 1) {
-    _product.serviceParts[id].isExpanded = !_product.serviceParts[id].isExpanded;
-  }
+  let childIndex = _products[parentIndex].serviceParts.findIndex( (servicePart) => {
+    return servicePart.partNumber == servicePartProductId;
+  })
+
+  let t = _products[parentIndex].serviceParts[childIndex];
+
+  // console.log(t);
+
+  _products[parentIndex].serviceParts[childIndex] = Object.assign({}, t, {product: _secondLevelProduct});
+
+
+  // let id = _product.serviceParts.findIndex( (servicePart) => {
+  //     return servicePart.partNumber == servicePartProductId;
+  // })
+  //
+  // if (id > - 1) {
+  //   _product.serviceParts[id].isExpanded = !_product.serviceParts[id].isExpanded;
+  // }
 
 }
 
@@ -60,14 +106,27 @@ class ProductStoreClass extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
+  getSearchPhrase() {
+    return _searchPhrase;
+  }
+
   getProducts() {
+
     return _products.map( (product) => {
        return Object.assign(product, {
-         title: decode(product.id + '  ' + product.name),
-         description: decode(product.description),
-         localPath: "https://s3.us-east-2.amazonaws.com/gw-catalog/images/" + product.fullPath.split('/').slice(-1)[0].replace('-2.', '.')
+         title: product.id + '  ' + product.name,
+         description: product.description,
+         localPath: 'https://s3.us-east-2.amazonaws.com/gw-catalog/images/' + product.fullPath.split('/').slice(-1)[0].replace('-2.', '.')
        })
     });
+  }
+
+  getProductsInStore() {
+    return _products.length;
+  }
+
+  getProductsCount() {
+    return _productsCount;
   }
 
   getSuggestions() {
@@ -86,6 +145,20 @@ class ProductStoreClass extends EventEmitter {
     return _isSuggestionsLoading;
   }
 
+  getIsLoadingMore() {
+    return _isLoadingMore;
+  }
+
+  isAutoSuggest() {
+    return _isAutoSuggest;
+  }
+
+  getIsAllLoaded() {
+    return _products.length == _productsCount && _productsCount != 0;
+  }
+
+  getSecondLevelProduct
+
 }
 
 const ProductStore = new ProductStoreClass();
@@ -93,6 +166,11 @@ const ProductStore = new ProductStoreClass();
 ProductStore.dispatchToken = AppDispatcher.register(action => {
 
   switch(action.actionType) {
+
+    case NetworkConstants.RECIVE_INPUT:
+      setSearchPhrase(action.searchPhrase);
+      ProductStore.emitChange();
+      break;
 
     case NetworkConstants.RECIEVE_PRODUCTS:
       setSuggestionsLoadingStatus(action.isLoading);
@@ -106,7 +184,25 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
 
     case NetworkConstants.RECIEVE_PRODUCTS_SUCCESS:
       setProducts(action.products);
+      setProductsCount(action.count)
       setSuggestionsLoadingStatus(action.isLoading);
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.RECIEVE_PRODUCTS_UPDATE:
+      setIsLoadingMoreStatus(action.isLoading);
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.RECIEVE_PRODUCTS_UPDATE_ERROR:
+      setIsLoadingMoreStatus(action.isLoading);
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.RECIEVE_PRODUCTS_UPDATE_SUCCESS:
+      insertMoreProducts(action.products);
+      setProductsCount(action.count)
+      setIsLoadingMoreStatus(action.isLoading);
       ProductStore.emitChange();
       break;
 
@@ -120,8 +216,22 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
       ProductStore.emitChange();
       break;
 
+    case NetworkConstants.HIDE_LOADING:
+      setSuggestionsLoadingStatus(action.isLoading);
+      ProductStore.emitChange();
+      break;
+
     case NetworkConstants.TOGGLE_EXPAND:
-      toggleExpand(action.servicePartProductId);
+      toggleExpand(action.servicePartProductId, action.level, action.parent);
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.TOGLE_AUTOSUGGEST:
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.RECIEVE_SERVICE_PART_PRODUCT_SUCCESS:
+      setSecondLevelProduct(action.product);
       ProductStore.emitChange();
       break;
 

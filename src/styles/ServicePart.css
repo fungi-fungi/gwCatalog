@@ -1,3 +1,7 @@
+.main {
+  margin-bottom: 16px;
+}
+
 .card {
   display: flex;
 }
@@ -5,10 +9,11 @@
 .details {
   display: flex;
   flex-direction: column;
+  max-width: 80%;
 }
 
 .content {
-  flex: 1 0 auto
+  flex: 1 0 auto;
 }
 
 .icons {

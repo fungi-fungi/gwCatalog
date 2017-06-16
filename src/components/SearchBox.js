@@ -2,74 +2,68 @@
 
 import React from 'react';
 
-import Autosuggest from 'react-autosuggest';
 import SearchIcon from 'material-ui-icons/Search';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import InboxIcon from 'material-ui-icons/Inbox';
 import Paper from 'material-ui/Paper';
 import { CircularProgress } from 'material-ui/Progress';
+
+import ProductStore from '../stores/ProductStore';
+import SearchBoxActions from '../actions/SearchBoxActions';
+import ProductActions from '../actions/ProductActions';
 
 import styles from '../styles/SearchBox.css'
 
 /**
  * SearchBox component
  */
- const getSuggestionValue = suggestion => suggestion.id;
-
- const renderSuggestionsContainer= ({ containerProps , children, query }) => {
-  return (
-    <List {... containerProps}>
-      {children}
-    </List>
-  );
-}
-
- const renderSuggestion = suggestion => (
-   <ListItem button>
-      <ListItemIcon>
-        <InboxIcon />
-      </ListItemIcon>
-      <ListItemText primary={suggestion.title} />
-    </ListItem>
- );
 
 class SearchBox extends React.Component {
 
-  render() {
-    const { suggestions,
-            value,
-            onSuggestionsClearRequested,
-            onSuggestionsFetchRequested,
-            onSuggestionSelected,
-            onInputChange,
-            isLoading
-           } = this.props;
+  constructor() {
+    super()
 
-    const inputProps = {
-      placeholder: 'Type product ID or Name',
-      value,
-      onChange: onInputChange
+    this.state = {
+      searchPhrase: '',
+      isLoading: false
     };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount() {
+    ProductStore.addChangeListener(this.onChange);
+  }
+
+  componentWillUnmount() {
+    ProductStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    this.setState({
+      searchPhrase: ProductStore.getSearchPhrase(),
+      isLoading: ProductStore.getIsSuggestionsLoading()
+    });
+  }
+
+  handleChange(event) {
+    SearchBoxActions.setSearchPhrase(event.target.value);
+    ProductActions.startSearch(event.target.value);
+    window.scrollTo(0, 0);
+  }
+
+  render() {
+    const { searchPhrase, isLoading } = this.state;
 
     return (
       <Paper className={styles.mainContainer}>
         <SearchIcon />
-        <Autosuggest
-          theme={styles}
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          renderSuggestionsContainer={renderSuggestionsContainer}
-          inputProps={inputProps}
-          onSuggestionSelected={onSuggestionSelected}
-        />
+        <input value={searchPhrase} onChange={ this.handleChange } placeholder="Type name of id" />
+        <div className={styles.loadingContainer}>
         { isLoading ? (
           <CircularProgress size={20} />
         ) : (
           <div className={styles.loadingPlaceholder}></div>
         )}
+        </div>
       </Paper>
     );
   }

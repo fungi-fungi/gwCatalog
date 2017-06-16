@@ -1,8 +1,6 @@
 const path = require('path')
 const express = require('express')
-
-const Product = require('./product.js');
-
+const utils = require('./utils.js');
 
 module.exports = {
   routes: () => {
@@ -16,23 +14,15 @@ module.exports = {
     })
 
     router.get('/api/products', (req, res) => {
-      Product
-        .find({ $or:[
-          { id: { '$regex': req.query.query, '$options': 'i' }},
-          { name: { '$regex': req.query.query, '$options': 'i'}}
-        ]})
-        .limit(10)
-        .exec( (err, product) => {
-          res.send(product);
-        })
+      utils.queryProductsInBatch(req.query.query, req.query.offset, (result) => {
+        res.send(result);
+      });
     })
 
     router.get('/api/products/:id', (req, res) => {
-      Product
-        .findOne({ id: req.params.id })
-        .exec( (err, product) => {
-          res.send(product);
-        })
+      utils.queryProduct(req.params.id, (result) => {
+        res.send(result);
+      });
     })
 
   	return router;

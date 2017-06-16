@@ -37,7 +37,7 @@ class ProductDetails extends React.Component {
                 <Grid item>
                   <Grid container>
                     <Grid item xs={4}>
-                      <img src={product.localPath} />
+                      <img width="100" height="100" src={product.localPath} />
                     </Grid>
                     <Grid item md={8} xs={8}>
                       { product.description }
