@@ -15,32 +15,18 @@ let _product = { name: '' };
 let _isSuggestionsLoading = false;
 let _isLoadingMore = false;
 let _isAutoSuggest = true;
-let _secondLevelProduct = { name: '' };
-
-function test(products) {
-
-  products.forEach( product => {
-
-    let serviceParts =  product.serviceParts.map( servicePart => {
-      return Object.assign({}, servicePart, { parents: { parent:  product._id, serviceParts: [servicePart.partNumber] } })
-    })
-    product.serviceParts = serviceParts;
-
-  })
-
-  return products;
-}
+let _productsDetails = new Map();
 
 function setSearchPhrase(searchPhrase) {
   _searchPhrase = searchPhrase;
 }
 
 function insertMoreProducts(products) {
-  _products = [].concat(_products, test(products));
+  _products = [].concat(_products, products);
 }
 
 function setProducts(products) {
-  _products = test(products);
+  _products = products;
 }
 
 function setProduct(product) {
@@ -50,8 +36,8 @@ function setProduct(product) {
   })
 }
 
-function setSecondLevelProduct(product) {
-  _secondLevelProduct = product;
+function addDownloadedProduct(product) {
+  _productsDetails.set(product.id, product);
 }
 
 function setProductsCount(count) {
@@ -68,24 +54,6 @@ function setIsLoadingMoreStatus(status) {
 
 function clearProducts() {
   _products = [];
-}
-
-function toggleExpand(servicePartProductId, parents) {
-
-  console.log(parents);
-
-  let parentIndex = _products.findIndex( (product) => {
-      return product.id == parent;
-  })
-
-  let childIndex = _products[parentIndex].serviceParts.findIndex( (servicePart) => {
-    return servicePart.partNumber == servicePartProductId;
-  })
-
-  let t = _products[parentIndex].serviceParts[childIndex];
-
-  _products[parentIndex].serviceParts[childIndex] = Object.assign({}, t, {product: _secondLevelProduct});
-
 }
 
 class ProductStoreClass extends EventEmitter {
@@ -150,10 +118,12 @@ class ProductStoreClass extends EventEmitter {
   }
 
   getIsAllLoaded() {
-    return _products.length == _productsCount && _productsCount != 0;
+    return _products.length == _productsCount || _productsCount != 0;
   }
 
-  getSecondLevelProduct
+  getProductsDetailsList() {
+    return _productsDetails;
+  }
 
 }
 
@@ -217,17 +187,12 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
       ProductStore.emitChange();
       break;
 
-    case NetworkConstants.TOGGLE_EXPAND:
-      toggleExpand(action.servicePartProductId, action.parents);
-      ProductStore.emitChange();
-      break;
-
     case NetworkConstants.TOGLE_AUTOSUGGEST:
       ProductStore.emitChange();
       break;
 
     case NetworkConstants.RECIEVE_SERVICE_PART_PRODUCT_SUCCESS:
-      setSecondLevelProduct(action.product);
+      addDownloadedProduct(action.product);
       ProductStore.emitChange();
       break;
 

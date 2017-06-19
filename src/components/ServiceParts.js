@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import ServicePartsDetailsStore from '../stores/ServicePartsDetailsStore';
+import ProductStore from '../stores/ProductStore';
 import ServicePartsActions from '../actions/ServicePartsActions';
 
 import ServicePart from './ServicePart';
@@ -14,32 +14,33 @@ class ServiceParts extends React.Component {
 
     this.state = {
       products: new Map()
-    };
+    }
 
     this.onChange = this.onChange.bind(this);
   }
 
   componentWillMount() {
-    ServicePartsDetailsStore.addChangeListener(this.onChange);
+    ProductStore.addChangeListener(this.onChange);
   }
 
   componentWillUnmount() {
-    ServicePartsDetailsStore.removeChangeListener(this.onChange);
+    ProductStore.removeChangeListener(this.onChange);
   }
 
   onChange() {
     this.setState({
-      products: ServicePartsDetailsStore.getProducts()
+      products: ProductStore.getProductsDetailsList()
     });
   }
 
-  onExpand = (id, parents) => {
-    ServicePartsActions.fetchProduct(id);
-    ServicePartsActions.toggleExpand(id, parents);
+  onExpand = (id) => {
+    if (!this.state.products.has(id)) {
+      ServicePartsActions.fetchProduct(id);
+    }
   }
 
-  getProduct = (id) => {
-    return this.state.products.get(id) || {};
+  getTestData = (id) => {
+    return this.state.products.get(id);
   }
 
   render() {
@@ -51,8 +52,8 @@ class ServiceParts extends React.Component {
         { parts.map( (servicePart) => {
             return <ServicePart
               servicePart={ servicePart }
-              product={ servicePart.product || {name: ''} }
               onExpand={ this.onExpand }
+              productDetails={ this.getTestData(servicePart.partNumber) }
           />
         } )}
       </div>

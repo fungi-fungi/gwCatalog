@@ -10,15 +10,29 @@ import Typography from 'material-ui/Typography';
 
 import InboxIcon from 'material-ui-icons/Input';
 
-import ProductDetailsShort from './ProductDetailsShort'
+import ProductDetailsWithLoader from './ProductDetailsWithLoader'
 
 import styles from '../styles/ServicePart.css'
 
 class ServicePart extends React.Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      isExpaned: false
+    }
+  }
+
+  onExpand = (id, callback) => {
+    this.setState({ isExpanded: !this.state.isExpanded })
+    callback(id);
+  }
+
   render() {
 
-    const { servicePart, product, level, parent, onExpand } = this.props;
+
+    const { servicePart, productDetails, onExpand } = this.props;
 
     return (
 
@@ -41,7 +55,7 @@ class ServicePart extends React.Component {
                   </CardContent>
                 </div>
                 <div className={styles.icons}>
-                  <IconButton onClick={ () => onExpand(servicePart.partNumber, servicePart.parents) }>
+                  <IconButton onClick={ () => this.onExpand(servicePart.partNumber, onExpand) }>
                     <InboxIcon />
                   </IconButton>
                 </div>
@@ -49,15 +63,8 @@ class ServicePart extends React.Component {
             </Grid>
         </Grid>
         <Grid item>
-          <Collapse in={ servicePart.isExpanded } transitionDuration="auto" unmountOnExit>
-            <Grid container direction="row">
-              <Grid item xs={1}></Grid>
-              <Grid item xs={11}>
-                <CardContent>
-                  <ProductDetailsShort product={ product } />
-                </CardContent>
-              </Grid>
-            </Grid>
+          <Collapse in={ this.state.isExpanded } transitionDuration="auto" unmountOnExit>
+            <ProductDetailsWithLoader productDetails={productDetails} />
           </Collapse>
         </Grid>
         </Grid>
