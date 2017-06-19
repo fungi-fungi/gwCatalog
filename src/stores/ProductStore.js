@@ -17,16 +17,30 @@ let _isLoadingMore = false;
 let _isAutoSuggest = true;
 let _secondLevelProduct = { name: '' };
 
+function test(products) {
+
+  products.forEach( product => {
+
+    let serviceParts =  product.serviceParts.map( servicePart => {
+      return Object.assign({}, servicePart, { parents: { parent:  product._id, serviceParts: [servicePart.partNumber] } })
+    })
+    product.serviceParts = serviceParts;
+
+  })
+
+  return products;
+}
+
 function setSearchPhrase(searchPhrase) {
   _searchPhrase = searchPhrase;
 }
 
 function insertMoreProducts(products) {
-  _products = [].concat(_products, products);
+  _products = [].concat(_products, test(products));
 }
 
 function setProducts(products) {
-  _products = products;
+  _products = test(products);
 }
 
 function setProduct(product) {
@@ -38,9 +52,6 @@ function setProduct(product) {
 
 function setSecondLevelProduct(product) {
   _secondLevelProduct = product;
-  console.log("set second");
-  console.log(product);
-  console.log(_secondLevelProduct);
 }
 
 function setProductsCount(count) {
@@ -59,13 +70,9 @@ function clearProducts() {
   _products = [];
 }
 
-function toggleExpand(servicePartProductId, level, parent) {
+function toggleExpand(servicePartProductId, parents) {
 
-  // console.log("------------");
-  // console.log(servicePartProductId);
-  // console.log(level);
-  // console.log(parent);
-  // console.log(_secondLevelProduct);
+  console.log(parents);
 
   let parentIndex = _products.findIndex( (product) => {
       return product.id == parent;
@@ -77,18 +84,7 @@ function toggleExpand(servicePartProductId, level, parent) {
 
   let t = _products[parentIndex].serviceParts[childIndex];
 
-  // console.log(t);
-
   _products[parentIndex].serviceParts[childIndex] = Object.assign({}, t, {product: _secondLevelProduct});
-
-
-  // let id = _product.serviceParts.findIndex( (servicePart) => {
-  //     return servicePart.partNumber == servicePartProductId;
-  // })
-  //
-  // if (id > - 1) {
-  //   _product.serviceParts[id].isExpanded = !_product.serviceParts[id].isExpanded;
-  // }
 
 }
 
@@ -222,7 +218,7 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
       break;
 
     case NetworkConstants.TOGGLE_EXPAND:
-      toggleExpand(action.servicePartProductId, action.level, action.parent);
+      toggleExpand(action.servicePartProductId, action.parents);
       ProductStore.emitChange();
       break;
 

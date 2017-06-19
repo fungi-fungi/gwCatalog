@@ -33,9 +33,9 @@ class ServiceParts extends React.Component {
     });
   }
 
-  onExpand = (id, level, parent) => {
+  onExpand = (id, parents) => {
     ServicePartsActions.fetchProduct(id);
-    ServicePartsActions.toggleExpand(id, level, parent);
+    ServicePartsActions.toggleExpand(id, parents);
   }
 
   getProduct = (id) => {
@@ -44,7 +44,7 @@ class ServiceParts extends React.Component {
 
   render() {
 
-    const { parts, level, parent } = this.props;
+    const { parts } = this.props;
 
     return (
       <div>
@@ -53,8 +53,6 @@ class ServiceParts extends React.Component {
               servicePart={ servicePart }
               product={ servicePart.product || {name: ''} }
               onExpand={ this.onExpand }
-              level={ level + 1 }
-              parent={ parent }
           />
         } )}
       </div>

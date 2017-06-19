@@ -41,7 +41,7 @@ class ServicePart extends React.Component {
                   </CardContent>
                 </div>
                 <div className={styles.icons}>
-                  <IconButton onClick={ () => onExpand(servicePart.partNumber, level, parent) }>
+                  <IconButton onClick={ () => onExpand(servicePart.partNumber, servicePart.parents) }>
                     <InboxIcon />
                   </IconButton>
                 </div>
