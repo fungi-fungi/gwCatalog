@@ -3,6 +3,7 @@
 import React from 'react'
 
 import SearchResults from './SearchResults'
+import Details from './Details'
 
 import Grid from 'material-ui/Grid';
 
@@ -21,6 +22,7 @@ class MainApp extends React.Component {
             <SearchResults />
           </Grid>
         </Grid>
+        <Details />
       </div>
     );
   }

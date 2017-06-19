@@ -17,6 +17,8 @@ let _isLoadingMore = false;
 let _isAutoSuggest = true;
 let _productsDetails = new Map();
 
+let  _sl = null;
+
 function setSearchPhrase(searchPhrase) {
   _searchPhrase = searchPhrase;
 }
@@ -99,6 +101,10 @@ class ProductStoreClass extends EventEmitter {
 
   getSelectedProduct() {
     return _product;
+  }
+
+  getSelectedProduct1() {
+    return _products[1];
   }
 
   getIsProductSelected() {
