@@ -1,15 +1,12 @@
 'use strict';
 
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router';
 
 import Grid from 'material-ui/Grid';
 import Card, {CardContent } from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
-import Collapse from 'material-ui/transitions/Collapse';
 import InboxIcon from 'material-ui-icons/Input';
-
-import ProductDetailsShort from './ProductDetailsShort'
 
 import styles from '../styles/ServicePart.css';
 
@@ -29,7 +26,7 @@ class ProductSearchResult extends React.Component {
 
   render() {
 
-    const { product, parent } = this.props;
+    const { product } = this.props;
 
     return (
       <Card className={styles.main}>
@@ -58,24 +55,12 @@ class ProductSearchResult extends React.Component {
                   </CardContent>
                 </div>
                 <div className={styles.icons}>
-                  <IconButton onClick={ () => this.onExpand() }>
+                  <Link to={ "/parts/" + product.id }>
                     <InboxIcon />
-                  </IconButton>
+                  </Link>
                 </div>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item>
-            <Collapse in={ this.state.isExpanded } transitionDuration="auto" unmountOnExit>
-              <Grid container direction="row">
-                <Grid item xs={1}></Grid>
-                <Grid item xs={11}>
-                  <CardContent>
-                    <ProductDetailsShort parent={ parent } product={ product } level={ 1 } />
-                  </CardContent>
-                </Grid>
-              </Grid>
-            </Collapse>
           </Grid>
         </Grid>
       </Card>

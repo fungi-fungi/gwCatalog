@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -53,7 +54,9 @@ class AppMainBar extends React.Component {
               <Grid container>
                 <Grid item>
                   <IconButton contrast>
-                    <ArrowBack />
+                    <Link to="/home">
+                      <ArrowBack />
+                    </Link>
                   </IconButton>
                 </Grid>
                 <Grid item className={styles.alignTextCenter}>

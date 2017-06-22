@@ -33,10 +33,9 @@ class DetailsDialog extends React.Component {
           <IconButton color="contrast" onClick={this.handleRequestClose} aria-label="Close">
             <CloseIcon />
           </IconButton>
-          <Typography type="title" color="inherit" >
-            Sound
+          <Typography type="title" color="#ffffff" >
+            Close
           </Typography>
-          <Button color="contrast" onClick={this.handleRequestClose}>save</Button>
         </Toolbar>
       </AppBar>
       <Grid container>

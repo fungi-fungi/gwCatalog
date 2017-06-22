@@ -8,6 +8,7 @@ import { EventEmitter } from 'events';
 const CHANGE_EVENT = 'change';
 
 let _searchPhrase = '';
+let _selectedProduct = {};
 let _products = [];
 let _productsCount = 0;
 let _isProductSelected = false;
@@ -17,6 +18,7 @@ let _isLoadingMore = false;
 let _isAutoSuggest = true;
 let _productsDetails = new Map();
 
+
 let  _sl = null;
 
 function setSearchPhrase(searchPhrase) {
@@ -25,6 +27,14 @@ function setSearchPhrase(searchPhrase) {
 
 function insertMoreProducts(products) {
   _products = [].concat(_products, products);
+}
+
+function setSelectedProduct(product) {
+  _selectedProduct = Object.assign(product, {
+    title: product.id + '  ' + product.name,
+    description: product.description,
+    localPath: 'https://s3.us-east-2.amazonaws.com/gw-catalog/images/' + product.fullPath.split('/').slice(-1)[0].replace('-2.', '.')
+  });
 }
 
 function setProducts(products) {
@@ -107,6 +117,10 @@ class ProductStoreClass extends EventEmitter {
     return _products[1];
   }
 
+  getSelectedProduct2() {
+    return _selectedProduct;
+  }
+
   getIsProductSelected() {
     return _isProductSelected;
   }
@@ -146,6 +160,11 @@ ProductStore.dispatchToken = AppDispatcher.register(action => {
 
     case NetworkConstants.RECIEVE_PRODUCTS:
       setSuggestionsLoadingStatus(action.isLoading);
+      ProductStore.emitChange();
+      break;
+
+    case NetworkConstants.RECIEVE_PRODUCT_SUCCESS:
+      setSelectedProduct(action.product);
       ProductStore.emitChange();
       break;
 

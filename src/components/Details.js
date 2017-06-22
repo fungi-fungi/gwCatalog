@@ -37,13 +37,7 @@ class Details extends React.Component {
     const { selectedProduct } = this.state;
 
     return (
-      <div>
-      { selectedProduct ? (
-        <DetailsDialog product={ selectedProduct } />
-      ) : (
-        <span />
-      )}
-      </div>
+      <div></div>
     );
   }
 }

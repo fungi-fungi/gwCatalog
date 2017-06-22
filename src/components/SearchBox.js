@@ -19,7 +19,7 @@ import styles from '../styles/SearchBox.css'
 class SearchBox extends React.Component {
 
   constructor() {
-    super()
+    super();
 
     this.state = {
       searchPhrase: '',

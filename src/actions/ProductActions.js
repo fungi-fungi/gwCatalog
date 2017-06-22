@@ -86,6 +86,31 @@ export default {
     })
   },
 
+  recieveProduct: (id) => {
+
+    AppDispatcher.dispatch({
+      actionType: NetworkConstants.RECIEVE_PRODUCT,
+      isLoading: true
+    })
+
+    ClientAPI
+      .sendGetRequest('/products/' + id)
+      .then(product => {
+        AppDispatcher.dispatch({
+          actionType: NetworkConstants.RECIEVE_PRODUCT_SUCCESS,
+          product: product,
+          isLoading: false
+        });
+      })
+      .catch(message => {
+        AppDispatcher.dispatch({
+          actionType: NetworkConstants.RECIEVE_PRODUCT_ERROR,
+          message: message,
+          isLoading: false
+        });
+      });
+  },
+
   recieveProducts: (query) => {
 
     AppDispatcher.dispatch({
