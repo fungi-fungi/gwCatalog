@@ -12,6 +12,8 @@ import Typography from 'material-ui/Typography';
 
 import ProductSearchResult from './ProductSearchResult'
 
+import styles from '../styles/CategoryDetails.css';
+
 class CategoryDetails extends React.Component {
 
   constructor(){
@@ -74,7 +76,7 @@ class CategoryDetails extends React.Component {
               <Tab label="Serices" />
             </Tabs>
             <SwipeableViews index={this.state.index} onChangeIndex={this.handleChangeIndex}>
-              <div>
+              <div className={styles.listWrapper}>
                 {category.parts.map( (product) => {
                   return <ProductSearchResult parent={product.id} key={product._id} product={product}/>
                 })}
