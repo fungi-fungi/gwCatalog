@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -12,6 +12,7 @@ import Grid from 'material-ui/Grid';
 import Hidden from 'material-ui/Hidden';
 
 import SearchBox from './SearchBox';
+import AppDrawer from './AppDrawer';
 
 import styles from '../styles/AppMainBar.css'
 
@@ -21,28 +22,17 @@ class AppMainBar extends React.Component {
     super();
 
     this.state = {
-      value: '',
-      selectedProduct: { name: '' },
-      suggestions: [],
-      suggestionsTotal: 0,
-      isSuggestionsLoading: false,
-      isProductSelected: false,
-      isAutoSuggestOn: true
-    };
-
+      isOpen: true
+    }
   }
 
-  test = () => {}
+  handleClose = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
 
   render() {
 
-    const { value,
-            suggestions,
-            suggestionsTotal,
-            selectedProduct,
-            isSuggestionsLoading,
-            isAutoSuggestOn
-          } = this.state;
+    const { path } = this.props;
 
     return (
       <AppBar className={styles.appBar}>
@@ -52,20 +42,17 @@ class AppMainBar extends React.Component {
           <Hidden only={['sm', 'xs']}>
             <Grid item md={3} >
               <Grid container>
-                <Grid item>
-                  <IconButton contrast>
-                    <Link to="/home">
-                      <ArrowBack />
-                    </Link>
-                  </IconButton>
-                </Grid>
 
                 <Grid item>
-                  <IconButton contrast>
-                    <Link to="/categories/1/children">
-                      <MenuIcon />
-                    </Link>
-                  </IconButton>
+                  { path == '/home' ? (
+                      <IconButton contrast onClick={ () => this.handleClose() }>
+                        <MenuIcon />
+                      </IconButton>
+                  ) : (
+                      <IconButton contrast onClick={ () => browserHistory.goBack() }>
+                          <ArrowBack />
+                      </IconButton>
+                  )}
                 </Grid>
 
                 <Grid item className={styles.alignTextCenter}>
@@ -76,20 +63,11 @@ class AppMainBar extends React.Component {
           </Hidden>
 
           <Grid item xs={12} sm={12} md={6}>
-            <SearchBox
-              autoSuggest={ isAutoSuggestOn }
-              isLoading={ isSuggestionsLoading }
-              value={ value }
-              suggestions={ suggestions }
-              suggestionsTotal={ suggestionsTotal }
-              onInputChange={ this.test  }
-              onSuggestionsFetchRequested={ this.test }
-              onSuggestionSelected={ this.test }
-              onSuggestionsClearRequested={ this.test }
-            />
+             { path == '/home' && <SearchBox /> }
           </Grid>
         </Grid>
         </Toolbar>
+        <AppDrawer isOpen={this.state.isOpen} handleClose={this.handleClose} />
       </AppBar>
     );
   }
