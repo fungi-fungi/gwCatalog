@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import Grid from 'material-ui/Grid';
-
 import CategoryActions from '../actions/CategoryActions';
 import CategoryStore from '../stores/CategoryStore';
 
@@ -48,12 +46,7 @@ class CategoriesCatalog extends React.Component {
 
     return (
       <div>
-        <Grid container>
-          <Grid item xs={0} sm={3} />
-          <Grid item xs={12} sm={6}>
-            <CategoriesCatalogEntries categories={categories} />
-          </Grid>
-        </Grid>
+        <CategoriesCatalogEntries categories={categories} />
       </div>
     );
   }

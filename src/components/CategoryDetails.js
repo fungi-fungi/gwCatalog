@@ -1,15 +1,13 @@
 'use strict';
 
 import React from 'react';
-import { Link } from 'react-router';
+import SwipeableViews from 'react-swipeable-views';
 
 import CategoryActions from '../actions/CategoryActions';
 import CategoryStore from '../stores/CategoryStore';
 
-import SwipeableViews from 'react-swipeable-views';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 import ProductSearchResult from './ProductSearchResult'

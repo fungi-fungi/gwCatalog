@@ -18,9 +18,6 @@ let _isLoadingMore = false;
 let _isAutoSuggest = true;
 let _productsDetails = new Map();
 
-
-let  _sl = null;
-
 function setSearchPhrase(searchPhrase) {
   _searchPhrase = searchPhrase;
 }
@@ -87,7 +84,6 @@ class ProductStoreClass extends EventEmitter {
   }
 
   getProducts() {
-
     return _products.map( (product) => {
        return Object.assign(product, {
          title: product.id + '  ' + product.name,

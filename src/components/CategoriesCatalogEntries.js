@@ -16,7 +16,7 @@ class CategoryCatalogEntries extends React.Component {
 
       <Grid container>
         <Grid item xs={12} sm={12}>
-          { categories ? (            
+          { categories ? (
             categories.map( (category) => {
               return <CategoriesCatalogEntry category={category} />
             })

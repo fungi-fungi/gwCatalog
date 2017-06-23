@@ -8,3 +8,11 @@
 .app {
   width: 100%;
 }
+
+.searchBox {
+  padding: 16px;
+}
+
+.main {
+  margin-top: 80px;
+}

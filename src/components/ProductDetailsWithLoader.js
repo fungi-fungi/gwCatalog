@@ -30,7 +30,6 @@ class ProductDetailsWithLoader extends React.Component {
         )
       }
       </div>
-
     )
   }
 }
