@@ -59,6 +59,15 @@ class AppMainBar extends React.Component {
                     </Link>
                   </IconButton>
                 </Grid>
+
+                <Grid item>
+                  <IconButton contrast>
+                    <Link to="/categories/1/children">
+                      <MenuIcon />
+                    </Link>
+                  </IconButton>
+                </Grid>
+
                 <Grid item className={styles.alignTextCenter}>
                   <Typography type="title" colorInherit>Gateway</Typography>
                 </Grid>

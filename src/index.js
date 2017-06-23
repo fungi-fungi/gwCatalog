@@ -5,7 +5,9 @@ import { browserHistory, IndexRedirect, Router, Route } from 'react-router';
 
 import Main from './components/Main';
 import MainApp from './components/MainApp';
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/Dashboard';
+import CategoriesCatalog from './components/CategoriesCatalog';
+import CategoryDetails from './components/CategoryDetails';
 
 ReactDOM.render(
     <Router history={browserHistory}>
@@ -13,6 +15,8 @@ ReactDOM.render(
         <IndexRedirect to="/home" />
         <Route path="/home" component={MainApp} />
         <Route path="/parts/:id" component={Dashboard} />
+        <Route path="/categories/:id" component={CategoryDetails} />
+        <Route path="/categories/:id/children" component={CategoriesCatalog} />
       </Route>
     </Router>
   , document.getElementById('app'));

@@ -4,7 +4,7 @@ const api = require('./api.js')
 const port = (process.env.PORT || 8080)
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/gwcatalog');
+mongoose.connect('mongodb://localhost:27017/gCatalog');
 
 
 const app = express()

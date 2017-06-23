@@ -1,5 +1,7 @@
 const async = require('async');
+
 const Product = require('./product.js');
+const Category = require('./category.js');
 
 module.exports = {
 
@@ -62,12 +64,41 @@ module.exports = {
         }
     },
     function(err, results) {
-      if (err) {
-        console.log(err);
-      }
-
       callback(results);
     });
+  },
+
+  queryCategory: (id, callback) => {
+
+    Category.
+      findOne({ mgid: id })
+        .exec( (err, category) => {
+          async.map(
+            [category.parts, category.rentals, category.services],
+            (ids, requestCallback) => {
+              Product
+                .find({ spec_id: { $in: ids }})
+                .exec( (err, products) => {
+                    requestCallback(null, products);
+                })
+            },
+            (error, res) => {
+              callback(Object.assign(
+                {},
+                category.toObject(),
+                { parts: res[0], rentals: res[1], services: res[2] }
+              ));
+            }
+          )
+      })
+  },
+
+  queryCategoryChildren: (id, callback) => {
+    Category.
+      find({ parent: id })
+      .exec( (err, categories) => {
+        callback(categories);
+      })
   },
 
   queryProduct: (id, callback) => {

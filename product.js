@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 
 const productSchema = new Schema({
   id: String,
-  spec_id: Number,
+  spec_id: String,
   name: String,
   color: String,
   treatment: String,

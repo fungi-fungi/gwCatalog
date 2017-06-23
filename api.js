@@ -25,6 +25,18 @@ module.exports = {
       });
     })
 
+    router.get('/api/categories/:id', (req, res) => {
+      utils.queryCategory(req.params.id, (result) => {
+        res.send(result);
+      });
+    })
+
+    router.get('/api/categories/:id/children', (req, res) => {
+      utils.queryCategoryChildren(req.params.id, (result) => {
+        res.send(result);
+      });
+    })
+
   	return router;
   }
 }
