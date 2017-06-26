@@ -15,7 +15,7 @@ class Profile extends React.Component {
     return (
       <div className={styles.wrapper}>
         <img className={styles.imgCircle} src="https://lh5.googleusercontent.com/-BseFg0sBRqg/AAAAAAAAAAI/AAAAAAAAAfQ/rfH6Y0Tnr0k/photo.jpg" />
-        <Typography type="body2">
+        <Typography style={{color:'white'}} type="body2">
           Iurii Tverezovskyi
         </Typography>
       </div>
