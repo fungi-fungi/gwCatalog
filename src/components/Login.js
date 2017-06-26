@@ -24,9 +24,15 @@ class Login extends React.Component {
   }
 
   login(e) {
+
+    console.log('hello');
     e.preventDefault()
-    const { email, password } = this.getAuthParams()
-    this.props.auth.login(email, password)
+    this.props.auth.login();
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+    this.props.auth.auth0.authorize();
   }
 
   render() {

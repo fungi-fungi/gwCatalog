@@ -10,6 +10,6 @@ const productSchema = new Schema({
   color: String,
   treatment: String,
   fullPath: String
-},{ collection: 'products_copy' });
+},{ collection: 'products' });
 
 module.exports = mongoose.model('Product', productSchema);

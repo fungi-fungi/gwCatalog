@@ -4,7 +4,7 @@ import React from 'react'
 
 import Grid from 'material-ui/Grid';
 import { LinearProgress } from 'material-ui/Progress';
-import {CardContent } from 'material-ui/Card';
+import { CardContent } from 'material-ui/Card';
 
 import ProductDetailsShort from './ProductDetailsShort'
 
