@@ -3,6 +3,8 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 
+import { AuthWrapper } from './AuthWrapper';
+
 import CategoryActions from '../actions/CategoryActions';
 import CategoryStore from '../stores/CategoryStore';
 
@@ -41,7 +43,7 @@ class CategoryDetails extends React.Component {
   }
 
   componentDidMount(){
-    CategoryActions.recieveCategory(this.props.params.id);
+    CategoryActions.recieveCategory(this.props.match.params.id);
   }
 
   handleChange = (event, index) => {
@@ -100,4 +102,4 @@ class CategoryDetails extends React.Component {
   }
 }
 
-export default CategoryDetails;
+export default AuthWrapper(CategoryDetails);

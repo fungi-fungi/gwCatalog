@@ -3,6 +3,8 @@
 import React from 'react'
 import Infinite from 'react-infinite';
 
+import { AuthWrapper } from './AuthWrapper';
+
 import CircularProgressBar from './CircularProgressBar';
 import ResultsCouter from './ResultsCouter';
 import NoMoreResults from './NoMoreResults';
@@ -83,4 +85,4 @@ class SearchResults extends React.Component {
   }
 }
 
-export default SearchResults;
+export default AuthWrapper(SearchResults);

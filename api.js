@@ -13,6 +13,14 @@ module.exports = {
         res.sendFile(indexPath);
     })
 
+    router.get('/callback', (_, res) => {
+        res.sendFile(indexPath);
+    })
+
+    router.get('/home', (_, res) => {
+        res.sendFile(indexPath);
+    })
+
     router.get('/api/products', (req, res) => {
       utils.queryProductsInBatch(req.query.query, req.query.offset, (result) => {
         res.send(result);

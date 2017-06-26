@@ -1,12 +1,13 @@
 'use strict';
 
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 let buildLink = (category) => {
+
   if (category.hasChildren) {
     return '/categories/' + category.mgid + '/children'
   } else {

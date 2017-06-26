@@ -1,7 +1,7 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory, IndexRedirect, Router, Route } from 'react-router';
+import { Route, BrowserRouter } from 'react-router-dom';
 
 import Main from './components/Main';
 import SearchResults from './components/SearchResults';
@@ -10,34 +10,35 @@ import CategoriesCatalog from './components/CategoriesCatalog';
 import CategoryDetails from './components/CategoryDetails';
 import Login from './components/Login';
 import Callback from './components/Callback';
+import history from './utils/history';
 
-import AuthService from './utils/AuthService';
+import Auth from './utils/Auth0';
 
-const auth = new AuthService('VPqqN4tRDsC91w0dVLqNRuDCYFVkuxnF', 'gatewayexhibits.auth0.com');
+const auth = new Auth();
 
-const requireAuth = (nextState, replace) => {
-  if (!auth.loggedIn()) {
-    auth.logout();
-    replace({ pathname: '/login' });
-  }
-}
-
-const parseAuthHash = (nextState, replace) => {
+const handleAuthentication = (nextState, _) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
-    auth.parseHash(nextState.location.hash)
+    auth.handleAuthentication();
   }
 }
 
 ReactDOM.render(
-    <Router history={browserHistory}>
-      <Route path="/" component={Main} auth={auth}>
-        <IndexRedirect to="/home" />
-        <Route path="/home" component={SearchResults} />
-        <Route path="/parts/:id" component={Dashboard} />
-        <Route path="/categories/:id" component={CategoryDetails} />
-        <Route path="/categories/:id/children" component={CategoriesCatalog} />
-        // <Route path="/login" component={Login} />
-        // <Route path="/callback" onEnter={parseAuthHash} />
-      </Route>
-    </Router>
+  <BrowserRouter history={history} component={Main}>
+    <div>
+      <Route path="/" render={(props) => <Main auth={auth} {...props} />} />
+
+      <Route path="/home" render={(props) => <SearchResults auth={auth} {...props} />} />
+      <Route path="/parts/:id" render={(props) => <Dashboard auth={auth} {...props} />} />
+      <Route path="/categories/:id/children" render={(props) => <CategoriesCatalog auth={auth} {...props} />} />
+      <Route exact path="/categories/:id" render={(props) => <CategoryDetails auth={auth} {...props} />} />
+
+
+      <Route path="/login" render={(props) => <Login auth={auth} {...props} />} />
+
+      <Route path="/callback" render={(props) => {
+            handleAuthentication(props);
+            return <Callback {...props} />
+          }}/>
+    </div>
+  </BrowserRouter>
   , document.getElementById('app'));
