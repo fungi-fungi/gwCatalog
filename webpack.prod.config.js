@@ -20,8 +20,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
-        'CALLBACK_PATH': process.env.CALLBACK_PATH,
-        'BASE_PATH': process.env.BASE_PATH
+        'CALLBACK_PATH': JSON.stringify(process.env.CALLBACK_PATH),
+        'BASE_PATH': JSON.stringify(process.env.BASE_PATH)
       }
     }),
     new webpack.optimize.DedupePlugin(),
