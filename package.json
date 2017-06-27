@@ -8,11 +8,12 @@
   },
   "scripts": {
     "build-analize": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --json | webpack-bundle-size-analyzer",
-    "start": "node ./app.js",
-    "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.prod.config.js --progress --colors",
+    "start": "SET NODE_ENV=development node ./app.js",
+    "build": "rimraf public && cross-env NODE_ENV=production webpack -p --config ./webpack.prod.config.js --progress --colors",
     "test": "karma start",
     "serve:prod": "NODE_ENV=production node ./app.js",
-    "heroku-postbuild": "NODE_ENV=development webpack -p --config ./webpack.dev.config.js --progress"
+    "start:prod": "npm run build && npm run serve:prod",
+    "heroku-postbuild": "NODE_ENV=production webpack -p --config ./webpack.prod.config.js --progress"
   },
   "repository": "",
   "keywords": [],
@@ -88,6 +89,7 @@
     "react-swipeable-views": "^0.12.3",
     "react-tap-event-plugin": "^2.0.1",
     "react-virtualized": "^9.7.3",
+    "rimraf": "^2.6.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "superagent": "^3.4.1",

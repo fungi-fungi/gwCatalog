@@ -1,6 +1,6 @@
-const dotenv = require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const path = require('path')
 const api = require('./api.js')
 const port = (process.env.PORT || 8080)
 
@@ -29,6 +29,8 @@ if (process.env.NODE_ENV !== 'production') {
     noInfo: true,
     publicPath: config.output.publicPath
   }))
+} else {
+  app.use('/public', express.static(path.join(__dirname, 'public')));
 }
 
 app.listen(port)

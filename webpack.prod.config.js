@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   devtool: 'source-map',
@@ -20,10 +19,11 @@ module.exports = {
     new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify('production'),
+        'CALLBACK_PATH': process.env.CALLBACK_PATH,
+        'BASE_PATH': process.env.BASE_PATH
       }
     }),
-    new Dotenv({ path: './.env', safe: false }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
