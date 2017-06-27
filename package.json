@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.prod.config.js --progress --colors",
     "test": "karma start",
     "serve:prod": "NODE_ENV=production node ./app.js",
-    "heroku-postbuild": "NODE_ENV=production webpack -p --config ./webpack.prod.config.js --progress"
+    "heroku-postbuild": "NODE_ENV=development webpack -p --config ./webpack.dev.config.js --progress"
   },
   "repository": "",
   "keywords": [],
