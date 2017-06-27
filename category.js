@@ -13,6 +13,6 @@ const categorySchema = new Schema({
   parts: Array,
   rentals: Array,
   services: Array
-},{ collection: 'categories' });
+},{ collection: process.env.CATEGORY_COLECTION_NAME });
 
 module.exports = mongoose.model('Category', categorySchema);

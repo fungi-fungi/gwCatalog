@@ -3,7 +3,10 @@
 import request from 'superagent/lib/client';
 import LoginStore from '../stores/LoginStore'
 
-const basePath = 'http://localhost:8080/api';
+const basePath = process.env.BASE_PATH;
+
+console.log(basePath);
+console.log(process.env.BASE_PATH);
 
 export default {
 

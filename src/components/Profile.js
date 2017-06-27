@@ -10,13 +10,13 @@ class Profile extends React.Component {
 
   render() {
 
-    const {  } = this.props;
+    const profile = JSON.parse(localStorage.getItem('profile')) || { picture: '',  name: ''};
 
     return (
       <div className={styles.wrapper}>
-        <img className={styles.imgCircle} src="https://lh5.googleusercontent.com/-BseFg0sBRqg/AAAAAAAAAAI/AAAAAAAAAfQ/rfH6Y0Tnr0k/photo.jpg" />
+        <img className={styles.imgCircle} src={ profile.picture } />
         <Typography style={{color:'white'}} type="body2">
-          Iurii Tverezovskyi
+          { profile.name }
         </Typography>
       </div>
 

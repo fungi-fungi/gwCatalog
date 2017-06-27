@@ -1,10 +1,17 @@
+const dotenv = require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const api = require('./api.js')
 const port = (process.env.PORT || 8080)
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/catalog');
+mongoose.connect(
+  'mongodb://' +
+  process.env.DB_USER + ':' +
+  process.env.DB_PASS + '@' +
+  process.env.DB_HOST + ':' +
+  process.env.DB_PORT + '/' +
+  process.env.DB_NAME );
 
 
 const app = express()
@@ -25,4 +32,3 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.listen(port)
-console.log(`Listening at http://localhost:${port}`)

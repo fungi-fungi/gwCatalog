@@ -8,7 +8,7 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'gatewayexhibits.auth0.com',
     clientID: 'VPqqN4tRDsC91w0dVLqNRuDCYFVkuxnF',
-    redirectUri: 'http://localhost:8080/callback',
+    redirectUri: process.env.CALLBACK_PATH,
     audience: 'https://gatewayexhibits.auth0.com/api/v2/',
     responseType: 'token id_token',
     scope: 'openid profile user_metadata read:current_user'

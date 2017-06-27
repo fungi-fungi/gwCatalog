@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   devtool: 'source-map',
@@ -22,6 +23,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
+    new Dotenv({ path: './.env', safe: false }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
