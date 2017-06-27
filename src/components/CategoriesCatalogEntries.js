@@ -13,12 +13,11 @@ class CategoryCatalogEntries extends React.Component {
     const { categories } = this.props;
 
     return (
-
       <Grid container>
         <Grid item xs={12} sm={12}>
           { categories ? (
             categories.map( (category) => {
-              return <CategoriesCatalogEntry category={category} />
+              return <CategoriesCatalogEntry key={category.mgid} category={category} />
             })
           ) : (
             <CircularProgressBar />

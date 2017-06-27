@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { browserHistory } from 'react-router';
+
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -32,7 +32,8 @@ class AppMainBar extends React.Component {
 
   render() {
 
-    const { path } = this.props;
+    const { pathname } = this.props.location;
+    const { isAuthenticated } = this.props.auth;
 
     return (
       <AppBar className={styles.appBar}>
@@ -44,12 +45,12 @@ class AppMainBar extends React.Component {
               <Grid container>
 
                 <Grid item>
-                  { path == '/home' ? (
+                  { pathname == '/home' ? (
                       <IconButton contrast onClick={ () => this.handleClose() }>
                         <MenuIcon />
                       </IconButton>
                   ) : (
-                      <IconButton contrast onClick={ () => browserHistory.goBack() }>
+                      <IconButton contrast onClick={ () => this.props.history.goBack() }>
                           <ArrowBack />
                       </IconButton>
                   )}
@@ -63,11 +64,17 @@ class AppMainBar extends React.Component {
           </Hidden>
 
           <Grid item xs={12} sm={12} md={6}>
-             { path == '/home' && <SearchBox /> }
+             { pathname == '/home' && <SearchBox /> }
           </Grid>
         </Grid>
         </Toolbar>
-        <AppDrawer isOpen={this.state.isOpen} handleClose={this.handleClose} />
+
+        {
+          isAuthenticated() && (
+            <AppDrawer {...this.props} isOpen={this.state.isOpen} handleClose={this.handleClose} />
+          )
+        }
+
       </AppBar>
     );
   }

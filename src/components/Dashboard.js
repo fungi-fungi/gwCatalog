@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { AuthWrapper } from './AuthWrapper';
+
 import ProductActions from '../actions/ProductActions';
 import ProductStore from '../stores/ProductStore';
 
@@ -34,7 +36,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount(){
-    ProductActions.recieveProduct(this.props.params.id);
+    ProductActions.recieveProduct(this.props.match.params.id);
   }
 
   render() {
@@ -53,4 +55,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export default AuthWrapper(Dashboard);

@@ -1,0 +1,11 @@
+.wrapper {
+  padding: 16px;
+  background-image: url(https://res.cloudinary.com/lm7uywoba/image/upload/c_scale,w_250,x_635,y_358/v1496342344/branding/powerup_background.jpg);
+  color: white;
+}
+
+.imgCircle {
+  border-radius: 50%;
+  height: 60px;
+  margin-bottom: 16px;
+}

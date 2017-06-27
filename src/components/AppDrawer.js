@@ -1,18 +1,15 @@
 'use strict';
 
 import React from 'react'
-import { browserHistory } from 'react-router';
 
 import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import InboxIcon from 'material-ui-icons/Inbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
-import StarIcon from 'material-ui-icons/Star';
-import SendIcon from 'material-ui-icons/Send';
 import SearchIcon from 'material-ui-icons/Search';
-import DeleteIcon from 'material-ui-icons/Delete';
+
 import ReceiptIcon from 'material-ui-icons/Receipt';
+
+import Profile from './Profile';
 
 import styles from '../styles/AppDrawer.css';
 
@@ -32,41 +29,16 @@ class AppDrawer extends React.Component {
           className={styles.drawerWrapper}
         >
         <div>
-          <List disablePadding>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <StarIcon />
-              </ListItemIcon>
-              <ListItemText primary="Starred" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <SendIcon />
-              </ListItemIcon>
-              <ListItemText primary="Send mail" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItem>
-          </List>
+          <Profile />
           <Divider />
           <List disablePadding>
-            <ListItem button onClick={ () => { browserHistory.push('/home') } }>
+            <ListItem button onClick={ () => { this.props.history.replace('/home') } }>
               <ListItemIcon>
                 <SearchIcon />
               </ListItemIcon>
               <ListItemText primary="General search" />
             </ListItem>
-            <ListItem button onClick={ () => { browserHistory.push('/categories/1/children') } }>
+            <ListItem button onClick={ () => { this.props.history.replace('/categories/1/children') } }>
               <ListItemIcon>
                 <ReceiptIcon />
               </ListItemIcon>

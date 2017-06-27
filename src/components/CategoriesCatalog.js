@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { AuthWrapper } from './AuthWrapper';
+
 import CategoryActions from '../actions/CategoryActions';
 import CategoryStore from '../stores/CategoryStore';
 
@@ -33,16 +35,18 @@ class CategoriesCatalog extends React.Component {
   }
 
   componentDidMount(){
-    CategoryActions.recieveCategories(this.props.params.id);
+    CategoryActions.recieveCategories(this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps){
-    CategoryActions.recieveCategories(nextProps.params.id);
+    CategoryActions.recieveCategories(nextProps.match.params.id);
   }
 
   render() {
 
     const { categories } = this.state;
+
+    console.log(categories);
 
     return (
       <div>
@@ -52,4 +56,4 @@ class CategoriesCatalog extends React.Component {
   }
 }
 
-export default CategoriesCatalog;
+export default AuthWrapper(CategoriesCatalog);
