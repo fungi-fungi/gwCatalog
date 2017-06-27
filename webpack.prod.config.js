@@ -39,17 +39,20 @@ module.exports = {
     loaders: [
       { test: /\.js?$/,
         loader: 'babel',
-        exclude: /node_modules/ },
-
-            // { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
-
-      { test: /\.css$/, loader: "style-loader!css-loader" },
-      { test: /\.scss?$/,
-        loader: 'style!css!sass',
-        include: path.join(__dirname, 'src', 'styles') },
-      { test: /\.png$/,
-        loader: 'file' },
-      { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+        include: path.join(__dirname, 'src')
+      }, {
+        test: /\.css$/,
+        loader: 'style-loader'
+      }, {
+        test: /\.css$/,
+        loader: 'css-loader',
+        query: {
+          modules: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]'
+        }
+      }, {  test: /\.(jpg|png)$/,
+        loader: 'url-loader'
+      }, { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
         loader: 'file'}
     ]
   }
