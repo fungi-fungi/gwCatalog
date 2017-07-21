@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import SearchIcon from 'material-ui-icons/Search';
 
 import ReceiptIcon from 'material-ui-icons/Receipt';
+import MediaQuery  from 'react-responsive';
 
 import Profile from './Profile';
 
@@ -21,32 +22,34 @@ class AppDrawer extends React.Component {
 
     return (
       <div>
-        <Drawer
-          open={isOpen}
-          onRequestClose={handleClose}
-          onClick={handleClose}
-          docked={true}
-          className={styles.drawerWrapper}
-        >
-        <div>
-          <Profile />
-          <Divider />
-          <List disablePadding>
-            <ListItem button onClick={ () => { this.props.history.replace('/home') } }>
-              <ListItemIcon>
-                <SearchIcon />
-              </ListItemIcon>
-              <ListItemText primary="General search" />
-            </ListItem>
-            <ListItem button onClick={ () => { this.props.history.replace('/categories/1/children') } }>
-              <ListItemIcon>
-                <ReceiptIcon />
-              </ListItemIcon>
-              <ListItemText primary="Categories catalog" />
-            </ListItem>
-          </List>
-        </div>
-        </Drawer>
+        <MediaQuery query='(min-device-width: 800px)'>
+          <Drawer
+            open={isOpen}
+            onRequestClose={handleClose}
+            onClick={handleClose}
+            docked={true}
+            className={styles.drawerWrapper}
+          >
+          <div>
+            <Profile />
+            <Divider />
+            <List disablePadding>
+              <ListItem button onClick={ () => { this.props.history.replace('/home') } }>
+                <ListItemIcon>
+                  <SearchIcon />
+                </ListItemIcon>
+                <ListItemText primary="General search" />
+              </ListItem>
+              <ListItem button onClick={ () => { this.props.history.replace('/categories/1/children') } }>
+                <ListItemIcon>
+                  <ReceiptIcon />
+                </ListItemIcon>
+                <ListItemText primary="Categories catalog" />
+              </ListItem>
+            </List>
+          </div>
+          </Drawer>
+      </MediaQuery>
       </div>
     )
   }
