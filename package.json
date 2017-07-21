@@ -4,7 +4,7 @@
   "description": "gwCatalog",
   "main": "",
   "engines": {
-    "node": "~6.2.2"
+    "node": "6.11.1"
   },
   "scripts": {
     "build-analize": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --json | webpack-bundle-size-analyzer",
