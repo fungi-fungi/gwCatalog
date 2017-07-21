@@ -8,7 +8,7 @@ import Card, {CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import InboxIcon from 'material-ui-icons/Input';
 
-import styles from '../styles/ServicePart.css';
+import styles from '../styles/ProductSearchResult.css';
 
 class ProductSearchResult extends React.Component {
 
@@ -55,7 +55,7 @@ class ProductSearchResult extends React.Component {
                   </CardContent>
                 </div>
                 <div className={styles.icons}>
-                  <Link to={ "/parts/" + product.id }>
+                  <Link to={ 'parts/' + product.id }>
                     <InboxIcon />
                   </Link>
                 </div>

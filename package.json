@@ -4,7 +4,7 @@
   "description": "gwCatalog",
   "main": "",
   "engines": {
-    "node": "~6.2.2"
+    "node": "6.11.1"
   },
   "scripts": {
     "build-analize": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --json | webpack-bundle-size-analyzer",
@@ -84,6 +84,7 @@
     "react-autosuggest": "^9.0.1",
     "react-dom": "^15.4.1",
     "react-infinite": "^0.11.0",
+    "react-responsive": "^1.3.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-swipeable-views": "^0.12.3",
