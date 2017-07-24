@@ -9,8 +9,7 @@ import styles from '../styles/Profile.css'
 class Profile extends React.Component {
 
   render() {
-
-    const profile = JSON.parse(localStorage.getItem('profile')) || { picture: '',  name: ''};
+    const profile = localStorage.getItem('profile') == null ? JSON.parse(localStorage.getItem('profile')) : { picture: '',  name: ''};
 
     return (
       <div className={styles.wrapper}>

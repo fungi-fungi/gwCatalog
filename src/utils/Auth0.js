@@ -14,6 +14,15 @@ export default class Auth {
     scope: 'openid profile user_metadata read:current_user'
   });
 
+  auth0UserInfo = new auth0.WebAuth({
+    domain: 'gatewayexhibits.auth0.com',
+    clientID: 'VPqqN4tRDsC91w0dVLqNRuDCYFVkuxnF',
+    redirectUri: process.env.CALLBACK_PATH,
+    audience: 'https://gatewayexhibits.auth0.com/userinfo',
+    responseType: 'token id_token',
+    scope: 'openid profile user_metadata read:current_user'
+  });
+
   constructor() {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -31,7 +40,7 @@ export default class Auth {
 
       if (authResult && authResult.accessToken && authResult.idToken) {
 
-        this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+        this.auth0UserInfo.client.userInfo(authResult.accessToken, (err, profile) => {
 
           if (err) {
             console.log(err);
